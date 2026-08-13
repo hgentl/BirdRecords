@@ -93,8 +93,8 @@ public class Bird
         
         Bird b = (Bird) obj;
         
-        return getSpecies() == b.getSpecies() && 
-                getLocation() == b.getLocation();
+        return getSpecies().equals(b.getSpecies()) && 
+                getLocation().equals(b.getLocation());
         
         }
     
@@ -104,8 +104,7 @@ public class Bird
      * @param bird, Represents the Bird object to be compared with 
      * @return 0 if equal, > 0 if bigger or < 0 if lower
      */
-    public int compareTo(Bird bird) {
-        
+    public int compareTo(Bird bird) {      
         return getSpecies().compareTo(bird.getSpecies());
     }
     

@@ -3,6 +3,8 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.time.format.DateTimeFormatter;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -33,22 +35,22 @@ public class BirdSightings
      * 
      * @param bird represents a Bird object
      * @return ture if the Bird is added to the map
-     * @throws IllegalArgumentException if the paramiter has a null value or is alredy present in the map
+     * @throws IllegalArgumentException if the paramiter has a null value
      */
     public boolean addEntry(Bird bird) {
         
-        if (bird != null) {
-            // check if the bird is already present in the map
-            if (dataset.containsKey(bird)){ // swap to assert?
-                throw new IllegalArgumentException(bird + "Already existis in the datset");
-            }
-            dataset.put(bird, new ArrayList<LocalDate>());
-            return true;
-            // if an invalid entry was passed
-            } else {
-            throw new IllegalArgumentException("Invalid data type passed");
+        if (bird == null) {
+            throw new IllegalArgumentException("null value passed");
         }
         
+        var value = dataset.putIfAbsent(bird, new ArrayList<LocalDate>());
+        
+        if (value == null) {
+            return true;
+        } else {
+            throw new IllegalArgumentException(bird + " cound not be added to the dataset");
+        }
+            
     }
     
     /**
@@ -78,13 +80,13 @@ public class BirdSightings
         addEntry(exampleC);
         
         updateData(exampleA, 2026, 4, 20);
-        updateData(exampleA, 2026, 3, 21);
+        updateData(exampleA, 2026, 11, 21);
         
-        updateData(exampleB, 2026, 4, 20);
+        updateData(exampleB, 2026, 10, 20);
         updateData(exampleB, 2026, 3, 21);
         
-        updateData(exampleC, 2026, 3, 21);
-        updateData(exampleC, 2026, 3, 20);
+        updateData(exampleC, 2026, 3, 1);
+        updateData(exampleC, 2026, 12, 20);
         
     }
     
@@ -97,16 +99,13 @@ public class BirdSightings
      */
     public boolean removeEntry(Bird obj) {
         
-        if (obj != null) {
-            if (dataset.containsKey(obj)) {
-                dataset.remove(obj);
-                return true;
-            }
-            throw new IllegalArgumentException(obj + "Not present in the dataset");
+        if (dataset.containsKey(obj)) {
+            dataset.remove(obj);
+            return true;
         } else {
-            throw new IllegalArgumentException("Invalid paramiter passed");
+            throw new IllegalArgumentException(obj + "Not present in the dataset");
         }
-        
+
     }
     
     /**
@@ -118,14 +117,19 @@ public class BirdSightings
      * @param month an integer representing the month
      * @param day an integer representing the day
      * @return true if the sighting value was added to the bird key
+     * @throws IllegalArgumentException if an invalid date format is passed 
      * @throws IllegalArgumentException if obj is not in the dataset or a null value
      */
-    public boolean updateData(Bird obj, int year, int month, int day) {
+    public boolean updateData(Bird obj, int year, int month, int day) {        
         // compound the date from the params
-        LocalDate dateSighted = LocalDate.of(year, month, day);
-
-        if (obj != null) {
+        String dateStr = String.valueOf(year) + "/" + String.valueOf(month) + "/" + String.valueOf(day);
+        // set the format for the date
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/M/d");
         
+        try {
+            // validate the date
+            LocalDate dateSighted = LocalDate.parse(dateStr, format);
+            // check for the key
             if (dataset.containsKey(obj)) {
                 ArrayList bird = dataset.get(obj);
                 bird.add(dateSighted);
@@ -133,10 +137,11 @@ public class BirdSightings
             } else {
                 throw new IllegalArgumentException("The bird is not present in the dataset");
             }
-        } else {
-           throw new IllegalArgumentException("Invalid paramiter passed"); 
-        }
         
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Error prashing date" + e.getMessage());
+        } 
+    
     }
     
     /**
@@ -146,20 +151,17 @@ public class BirdSightings
      * @return an ArrayList of all the dates a given bird was seen
      * @throws IllegalArgumentException
      */
-    public ArrayList<String> showKeyData(Bird obj) {
+    public ArrayList<String> getKeyData(Bird obj) {
         
-        if (obj != null) {
-        
-            if (dataset.containsKey(obj)) {
-                ArrayList data = dataset.get(obj);
-                return data;
-            } else {
-                throw new IllegalArgumentException("The requested bird is not in the dataset");
-            }
+        if(dataset.containsKey(obj)) {
+            ArrayList data = dataset.get(obj);
+            return data;
         } else {
-            throw new IllegalArgumentException("Invalid parameter passed");
+            throw new IllegalArgumentException("The requested bird is not in the dataset");
         }
+        
     }
+    
         
     /**
      * Outputs a formatted vesion of the map
@@ -170,17 +172,16 @@ public class BirdSightings
     public String displayMapContent() {
         if (dataset.isEmpty()) {
             return "The dataset is currently empty";
-            } else {
-        
-            String returnString = "";
-        
-            for (Bird key : dataset.keySet()) {
-                returnString += key.getSpecies() + ", Seen at: " + key.getLocation() + " on: " + dataset.get(key) + "\n";
-                returnString = returnString.replaceAll("\\[|\\]|", "");
             }
- 
-            return returnString;
+            
+        String returnString = "";
+        
+        for (Bird key : dataset.keySet()) {
+            returnString += key.getSpecies() + ", Seen at: " + key.getLocation() + " on: " + dataset.get(key) + "\n";
+            returnString = returnString.replaceAll("\\[|\\]|", "");
         }
+ 
+        return returnString;
     }
     
     /**
@@ -199,9 +200,12 @@ public class BirdSightings
         // holds the number of sightings which need to be updated
         int currentKeyTotal;
         
+        if (dataset.isEmpty()) { // return null?
+            throw new IllegalArgumentException("The dataset is currently empty");
+        }
+        
         for (Bird key : dataset.keySet()) {
             birdName = key.getSpecies();
-            
             /*
              * If key is not unique then compound the all of is sightings 
              * at each locaton is been seen at.
@@ -222,7 +226,7 @@ public class BirdSightings
             }
     
         }
-        System.out.println(totalSightings);
+        
         return totalSightings;
     }
     
@@ -231,9 +235,10 @@ public class BirdSightings
      * 
      * @param filename represents the target filename for the csv file
      * @return true if the csv file is successfuly created
+     * @throws IllegalArgumentException if the filename's extention is not .csv
      * @throws IOException if an IO error is encountered
      */
-    public boolean writeToCsvFile(String filename) {
+    public boolean exportToCsv(String filename) throws IOException {
         // represents each line in the file
         String lineWriter;
         // represents the dates of all the bird sightings as a String
@@ -241,12 +246,12 @@ public class BirdSightings
         
         // ensure filename ends in .csv
         if (!filename.contains(".csv")) {
-            filename = filename.replaceAll(".", "");
-            filename += ".csv";
-        }
+            throw new IllegalArgumentException("invalid file extention, filename must include .csv");
+        } 
         
         try {
             FileWriter output = new FileWriter(filename);
+            
             for (Bird key : dataset.keySet()) {
                 // get all the vaules for the current key
                 values = dataset.get(key).toString();
@@ -258,9 +263,10 @@ public class BirdSightings
             // close FileWriter after use
             output.close();
         } catch(IOException e) {
-            System.err.println("A problem arose while attempting  to create the CSV file");
+            throw new IOException("A problem arose while attempting to create the CSV file");
         }
         
         return true;
     }
+    
     }
