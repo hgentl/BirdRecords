@@ -42,9 +42,9 @@ Todo, (after Main.java has been written)
 ---
 
 ## Reflections
-I found working on this project really developed my understanding of the process of developing more reliable and robust software. I enjoyed thinking about aticipating and handling errors and found it gave me a valubale new perspective to develping software applications. 
+This project changed how I approached error handling. Rather than assuming that users would always provide valid data, I began thinking about what could go wrong at each stage of the program and how those situations should be handled.
 
-During this project I was introduecd to unit testing with JUint....
+Writing the JUnit tests reinforced this approach. Testing invalid inputs and edge cases made me realise that reliable software requires considering failure cases as part of the design, rather than adding error handling after the main functionality has been written.
 
 ### Future Improvments
 If I were assinged a similar task in a proffetional evnironment, I would imporve and develop additional handling of application logic, ensuring seperation between the collection layer, user actions and application logic. 
