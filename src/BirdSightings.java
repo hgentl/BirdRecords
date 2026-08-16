@@ -151,7 +151,7 @@ public class BirdSightings
      * @return an ArrayList of all the dates a given bird was seen
      * @throws IllegalArgumentException
      */
-    public ArrayList<String> getKeyData(Bird obj) {
+    public ArrayList<LocalDate> getKeyData(Bird obj) {
         
         if(dataset.containsKey(obj)) {
             ArrayList data = dataset.get(obj);
