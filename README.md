@@ -52,8 +52,11 @@ The project includes JUnit tests for both `Bird` and `BirdSightings`. The tests 
 ---
 
 ## Demonstration
+The `Main.java` class provides a small demonstration of the application's normal workflow.
 
-Todo, (after Main.java has been written)
+It creates a collection of bird sightings, records observations at different locations and dates, displays the stored records, calculates total sightings by species, and exports the collection to a CSV file.
+
+The demonstration also shows how the same species can be recorded at different locations while remaining separate entries in the collection. The JUnit tests provide additional coverage of invalid input, edge cases, and error handling.
 
 **Note**: This project was originally developed using BlueJ as part of a university module focused on object-oriented design rather than building complete Java applications. To make the project easier to explore outside the university environment, I have added a small `Main.java` class that demonstrates the core functionality. The demonstration is intended to showcase the design of the classes rather than every aspect of the original assignment.
 
