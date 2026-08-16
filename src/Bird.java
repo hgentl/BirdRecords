@@ -104,7 +104,8 @@ public class Bird
      * @return 0 if equal, > 0 if bigger or < 0 if lower
      */
     public int compareTo(Bird bird) {      
-        return getSpecies().compareTo(bird.getSpecies());
+        return getSpecies().compareTo(bird.getSpecies()) &&
+                getLocation().compareTo(bird.getLocation);
     }
     
     /**
