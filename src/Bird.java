@@ -21,22 +21,21 @@ public class Bird
                 String location, 
                 boolean endangered)
     {
-        
-        // format species & location
-        species = species.trim().toLowerCase();
-        location = location.trim().toLowerCase();
-        
-        
-        if (species.equals(null) || location.equals(null) ||
-            species.isEmpty() || location.isEmpty()) {
-            throw new IllegalArgumentException("species or location data cannot be empty or null");
+        // check for null values and format species & location Strings
+        try {
+            species = species.trim().toLowerCase();
+            location = location.trim().toLowerCase();
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid paramiter passed, species or location cannot be null");
+        }
+        // check for empty strings
+        if (species.isEmpty() || location.isEmpty()) {
+            throw new IllegalArgumentException("Invalid paramiter passed, species or location data cannot be empty");
         } 
         
         this.species = species;
         this.location = location;
-        
         this.endangered = endangered;
-    
 
     }
 

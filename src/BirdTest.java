@@ -27,27 +27,38 @@ public class BirdTest
         testObjFalsePositive = new Bird("species", "location", false);
     }
     
+    /**
+     * Tests invalid Bird object creations.
+     * 
+     * All Bird objects species and location values should empty or equal to null.
+     * All Bird object String values must contain lowercase letters in order to 
+     * prevent acsidental duplication.
+     */
     @Test
     public void objectCreationTests()
     {
-        boolean pass;
         
-        // False positive object creation tests
+        // False positive object creation tests with null values for species and location
         try {
             Bird testNullValueSpecies = new Bird(null, "test", true);
             Bird testNullValueLocation = new Bird("test", null, true);
             
-            Bird testBlankValueSpecies = new Bird(" ", "test", true);
-            Bird testBlankValueLocation = new Bird("test", " ", true);
-            
-            System.out.println("Failed to prevent the creation of invalid Bird objects");
-            pass = false;
-            
-        } catch (Exception e4) {
-            pass = true;
+        } catch (Exception e) {
+            assertEquals("Invalid paramiter passed, species or location cannot be null", e.getMessage());
         }
         
-        assert pass == true;
+        // trys to pass empty string values for species and location
+        try {
+            Bird testBlankValueSpecies = new Bird(" ", "test", true);
+            Bird testBlankValueLocation = new Bird("test", " ", true);
+        } catch (Exception e) {
+            assertEquals("Invalid paramiter passed, species or location data cannot be empty", e.getMessage());
+        }
+        
+        // test the standardisation of the Sting vaules for species & location
+        Bird testStandarisation = new Bird ("Test", "teSt", true);
+        assert testStandarisation.getSpecies().equals("test");
+        assert testStandarisation.getLocation().equals("test");
     }
     
     @Test
@@ -62,4 +73,18 @@ public class BirdTest
         assert bird.equals(testObjFalsePositive) == false;
     }
     
+    @Test
+    public void testCompareTo() {
+        // compare an equal object
+        assertEquals(bird.compareTo(testObjPositive), 0);
+        
+        // compare a "greater than" object
+        Bird greaterThan = new Bird("aaa", "aaa", false);
+        assertEquals(bird.compareTo(greaterThan), 19);
+        
+        // compare a "less than" object
+        Bird lessThan = new Bird("zzz", "zzz", true);
+        assertEquals(bird.compareTo(lessThan), -6);
+        
+    }
 }
