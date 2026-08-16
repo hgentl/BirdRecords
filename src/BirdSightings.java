@@ -131,7 +131,7 @@ public class BirdSightings
             LocalDate dateSighted = LocalDate.parse(dateStr, format);
             // check for the key
             if (dataset.containsKey(obj)) {
-                ArrayList bird = dataset.get(obj);
+                ArrayList<LocalDate> bird = dataset.get(obj);
                 bird.add(dateSighted);
                 return true;
             } else {
@@ -190,13 +190,13 @@ public class BirdSightings
      * 
      * @return a HashMap containing each bird and the total number of sightings
      */
-    public HashMap<String, Integer> totalSightings() {
+    public Map<String, Integer> totalSightings() {
         // holds each bird's name and how often they were seen
         HashMap<String, Integer> totalSightings = new HashMap<>();
         
         String birdName;
         // keeps a list of all the sightings
-        ArrayList totalValues;
+        ArrayList<LocalDate> totalValues;
         // holds the number of sightings which need to be updated
         int currentKeyTotal;
         
