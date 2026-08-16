@@ -238,7 +238,7 @@ public class BirdSightings
      * @throws IllegalArgumentException if the filename's extention is not .csv
      * @throws IOException if an IO error is encountered
      */
-    public boolean exportToCsv(String filename) throws IOException {
+    public boolean createCSV(String filename) throws IOException {
         // represents each line in the file
         String lineWriter;
         // represents the dates of all the bird sightings as a String
