@@ -154,7 +154,7 @@ public class BirdSightings
     public ArrayList<LocalDate> getKeyData(Bird obj) {
         
         if(dataset.containsKey(obj)) {
-            ArrayList data = dataset.get(obj);
+            ArrayList<LocalDate> data = dataset.get(obj);
             return data;
         } else {
             throw new IllegalArgumentException("The requested bird is not in the dataset");
@@ -190,7 +190,7 @@ public class BirdSightings
      * 
      * @return a HashMap containing each bird and the total number of sightings
      */
-    public HashMap totalSightings() {
+    public HashMap<String, Integer> totalSightings() {
         // holds each bird's name and how often they were seen
         HashMap<String, Integer> totalSightings = new HashMap<>();
         
