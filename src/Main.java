@@ -17,10 +17,10 @@ public class Main
         BirdSightings sightings = new BirdSightings();
 
         // Create birds representing species observed at different locations.
-        Bird robin = new Bird("Robin", "Richmond Park");
-        Bird robinWimbledon = new Bird("Robin", "Wimbledon Common");
-        Bird heron = new Bird("Grey Heron", "Richmond Park");
-        Bird kingfisher = new Bird("Kingfisher", "London Wetland Centre");
+        Bird robin = new Bird("Robin", "Richmond Park", true);
+        Bird robinWimbledon = new Bird("Robin", "Wimbledon Common", true);
+        Bird heron = new Bird("Grey Heron", "Richmond Park", false);
+        Bird kingfisher = new Bird("Kingfisher", "London Wetland Centre", false);
 
         // Add the birds to the collection.
         sightings.addEntry(robin);
@@ -29,32 +29,24 @@ public class Main
         sightings.addEntry(kingfisher);
 
         // Record sightings for each bird.
-        sightings.updateData(robin, LocalDate.of(2026, 8, 10));
-        sightings.updateData(robin, LocalDate.of(2026, 8, 12));
+        sightings.updateData(robin, 2026, 8, 10);
+        sightings.updateData(robin, 2026, 8, 12);
 
         sightings.updateData(
-            robinWimbledon,
-            LocalDate.of(2026, 8, 11)
-        );
+            robinWimbledon,2026, 8, 11);
 
         sightings.updateData(
-            heron,
-            LocalDate.of(2026, 8, 9)
-        );
+            heron, 2026, 8, 9);
 
         sightings.updateData(
-            kingfisher,
-            LocalDate.of(2026, 8, 13)
-        );
+            kingfisher, 2026, 8, 13);
 
         sightings.updateData(
-            kingfisher,
-            LocalDate.of(2026, 8, 14)
-        );
+            kingfisher, 2026, 8, 14);
 
         // Display the recorded sightings.
         System.out.println("--- Recorded Sightings ---\n");
-        sightings.displayMapContent();
+        System.out.println(sightings.displayMapContent());
 
         // Display total sightings by species.
         System.out.println("\n--- Total Sightings by Species ---\n");
