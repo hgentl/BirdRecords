@@ -18,11 +18,11 @@ The project utilises defencive programing practeses and error handling to ensure
 
 ### Defencive Programming  
 The `Bird` object is 
-### Error Handling
+### Error Avoidance & Recovery
 Errors are handled grasfuly using try/catch statments to esnure users
 
 ### IO/File operations
-Write a CSV file
+Write a CSV file...
 
 ### Object Methods?
 hashCode
@@ -35,7 +35,7 @@ ect
 
 ## Demonstration
 
-Todo, (after Main.java is written)
+Todo, (after Main.java has been written)
 
 **Note**: This project was originally developed using BlueJ as part of a university module focused on object-oriented design rather than building complete Java applications. To make the project easier to explore outside the university environment, I have added a small Main.java class that demonstrates the core functionality. The demonstration is intended to showcase the design of the classes rather than every aspect of the original assignment.
 
@@ -44,7 +44,7 @@ Todo, (after Main.java is written)
 ## Reflections
 I found working on this project really developed my understanding of the process of developing more reliable and robust software. I enjoyed thinking about aticipating and handling errors and found it gave me a valubale new perspective to develping software applications. 
 
-During this project I was introduecd to unit testing with JUint. I found this to be..........
+During this project I was introduecd to unit testing with JUint....
 
 ### Future Improvments
 If I were assinged a similar task in a proffetional evnironment, I would imporve and develop additional handling of application logic, ensuring seperation between the collection layer, user actions and application logic. 
