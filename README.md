@@ -1,35 +1,53 @@
 ## Project Outline
-This project was developed as part of my studies towards the Object-Oriented Java Programming module at The Open University. It models a bird watching society 
+This project was developed as part of my studies towards the Object-Oriented Java Programming module at The Open University. It models a record-keeping system for a bird-watching society, allowing members to record bird species, the locations where they were sighted, and the dates of those sightings.
 
 ### Assigment Context
-I was asked to develpe simple database for a Bird watching socety which would allow them to keep track of all different species of birds sigtghted in defferent locations. The projcet requied I implement defencive programming tequines and persistant stroage by writing to a csv file.
+The assignment required me to develop a small application for a real-world organisation to manage a collection of objects that were important to it. I chose a bird-watching society that needed to keep track of bird species observed at different locations.
+
+The project also introduced defensive programming, error handling, unit testing, and persistent storage through CSV files.
 
 ---
 
 ## Features
-* Recoreds and traks bird sightings accross different locations
-* Ensures persistant storage by writing the contensce of the collection to a csv file
-* 
+* Records bird species and the locations where they were sighted.
+* Stores multiple sighting dates for each bird/location combination.
+* Validates bird and sighting data before adding it to the collection.
+* Supports adding, retrieving, updating, and removing records.
+* Calculates total sightings for each species across different locations.
+* Displays the recorded sightings in a readable format.
+* Exports the collection to a CSV file for persistent storage.
+* Includes JUnit tests covering normal and invalid use cases.
 
 ---
 
 ## Design Highlights
 The project utilises defencive programing practeses and error handling to ensure a robust and CRUD system which can handle errors. The system encorprates 
 
-### Defencive Programming  
-The `Bird` object is 
-### Error Avoidance & Recovery
-Errors are handled grasfuly using try/catch statments to esnure users
+### Data Modeling
+The collection is represented using a `Map<Bird, ArrayList<LocalDate>>`, with each Bird object acting as a key and its associated value containing the dates on which it was sighted.
 
-### IO/File operations
-Write a CSV file...
+This structure allows multiple locations to be represented for the same species while keeping each location's individual sighting dates separate.
 
-### Object Methods?
-hashCode
-equals
-ect
+### Defensive Programming
+Input is validated before it is added to the system. Bird objects reject null and empty species or location values, while the collection validates that referenced birds exist before updating their sighting data.
 
-### Unit tests using JUnit
+Species and location names are also normalised to lowercase when a Bird object is created, helping to prevent accidental duplication caused by differences in capitalisation.
+
+### Error Handling
+Invalid operations result in `IllegalArgumentException`, while errors encountered during CSV creation are handled using `IOException`. Date input is validated using LocalDate, with invalid dates converted into meaningful exceptions for the caller.
+
+### Persistence
+The `BirdSightings` class can export the current collection to a CSV file, allowing the recorded data to persist beyond the lifetime of the application.
+
+The export method validates the requested file extension and handles I/O errors rather than allowing them to fail silently.
+
+### Object Equality and Hashing
+`Bird` overrides `equals()` and `hashCode()` so that birds with the same species and location are treated as equal. This is particularly important because Bird objects are used as keys within the HashMap that stores the collection.
+
+The implementation allows the collection to identify an existing bird/location combination reliably rather than relying on object identity.
+
+### Automated Testing
+The project includes JUnit tests for both `Bird` and `BirdSightings`. The tests cover normal behaviour as well as invalid inputs and edge cases, including null values, empty data, invalid dates, duplicate entries, missing records, and invalid file extensions.
 
 ---
 
